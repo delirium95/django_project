@@ -1,0 +1,26 @@
+{% if user.is_authenticated %}
+    <p>User: <a href="{% url "catalog:author-detail" pk=user.id %}">{{ user.username }}</a></p>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+{% else %}
+    <p>
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+{% endif %}
+
+<ul>
+    <li>
+        <a href="{% url 'catalog:index' %}">home</a>
+    </li>
+    <li>
+        <a href="{% url 'catalog:author-list' %}">All authors</a>
+    </li>
+    <li>
+        <a href="{% url 'catalog:book-list' %}">All books</a>
+    </li>
+    <li>
+        <a href="{% url 'catalog:literary-format-list' %}">All literary formats</a>
+    </li>
+</ul>

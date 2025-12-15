@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Author: {{ author.username }}</h1>
+    <div class="ml-3">
+        <h3>Books:</h3>
+        {% for book in author.books.all %}
+            <hr>
+            <p class="text-muted">{{ book.title }}</p>
+            <p>Price: {{ book.price }}</p>
+            <p>Format: {{ book.format }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -45,12 +45,11 @@ class BookListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        #title = self.request.GET.get("title")
+        queryset = Book.objects.select_related("format")
         form = BookSearchForm(self.request.GET)
         if form.is_valid():
-        #if title:
-            return self.queryset.filter(title__icontains=form.cleaned_data["title"])
-        return self.queryset
+            return queryset.filter(title__icontains=form.cleaned_data["title"])
+        return queryset
 
 
 class BookDetailView(LoginRequiredMixin, DetailView):
@@ -107,11 +106,3 @@ class AuthorDetailView(LoginRequiredMixin, DetailView):
 class AuthorCreateView(LoginRequiredMixin, CreateView):
     model = Author
     form_class = AuthorCreationForm
-
-
-# def book_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
-#     book = Book.objects.get(id=pk)
-#     context = {
-#         "book": book
-#     }
-#     return render(request, "catalog/book_detail.html", context=context)

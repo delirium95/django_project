@@ -2,16 +2,35 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-    <h1>Book List <a style="float: right" href="{% url 'catalog:book-create' %}">+</a></h1>
+    <h1>Book List <a class="btn btn-primary" style="float: right" href="{% url 'catalog:book-create' %}">+</a></h1>
     <form method="get" action="" class="form-inline">
         {{ search_form|crispy }}
         <input type="submit" class="btn btn-secondary">
     </form>
     {% if book_list %}
-        <ul>
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Format</th>
+            </tr>
             {% for book in book_list %}
-                <li><a href="{{ book.get_absolute_url }}">{{ book.title }} ({{ book.price }}, {{ book.format }})</a></li>
+            <tr>
+                <td>
+                    <a href="{{ book.get_absolute_url }}">{{ book.id }}</a>
+                </td>
+                <td>
+                    {{ book.title }}
+                </td>
+                <td>
+                    {{ book.price }}
+                </td>
+                <td>
+                    {{ book.format }}
+                </td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
     {% endif %}
 {% endblock %}

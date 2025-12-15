@@ -1,26 +1,26 @@
+<ul class="sidebar-nav list-group">
 {% if user.is_authenticated %}
-    <p>User: <a href="{% url "catalog:author-detail" pk=user.id %}">{{ user.username }}</a></p>
+    <li class="list-group-item"><p>User: <a href="{% url "catalog:author-detail" pk=user.id %}">{{ user.username }}</a></p>
     <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
-        <button type="submit">Logout</button>
+        <button type="submit" class="btn btn-danger">Logout</button>
     </form>
+    </li>
 {% else %}
     <p>
-        <a href="{% url 'login' %}">Login</a>
+        <li><a href="{% url 'login' %}">Login</a></li>
     </p>
 {% endif %}
-
-<ul>
-    <li>
+    <li class="list-group-item">
         <a href="{% url 'catalog:index' %}">home</a>
     </li>
-    <li>
+    <li class="list-group-item">
         <a href="{% url 'catalog:author-list' %}">All authors</a>
     </li>
-    <li>
+    <li class="list-group-item">
         <a href="{% url 'catalog:book-list' %}">All books</a>
     </li>
-    <li>
+    <li class="list-group-item">
         <a href="{% url 'catalog:literary-format-list' %}">All literary formats</a>
     </li>
 </ul>

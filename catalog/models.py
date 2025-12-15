@@ -4,8 +4,6 @@ from django.db import models
 from django.urls import reverse
 
 
-# Create your models here.
-
 class LiteraryFormat(models.Model):
     name = models.CharField(max_length=255)
 
@@ -45,3 +43,4 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("catalog:book-detail", args=[str(self.id)])
+

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from .forms import AuthorCreationForm
+from .forms import AuthorCreationForm, BookForm, BookSearchForm
 from .models import Book, Author, LiteraryFormat
 
 
@@ -32,7 +32,25 @@ class LiteraryFormatListView(LoginRequiredMixin, ListView):
 class BookListView(LoginRequiredMixin, ListView):
     model = Book
     queryset = Book.objects.select_related("format")
-    paginate_by = 10
+    paginate_by = 5
+
+    def get_context_data(
+        self, *, object_list = ..., **kwargs
+    ):
+        context = super(BookListView, self).get_context_data(**kwargs)
+        title = self.request.GET.get("title", "")
+        context["search_form"] = BookSearchForm(
+            initial={"title": title}
+        )
+        return context
+
+    def get_queryset(self):
+        #title = self.request.GET.get("title")
+        form = BookSearchForm(self.request.GET)
+        if form.is_valid():
+        #if title:
+            return self.queryset.filter(title__icontains=form.cleaned_data["title"])
+        return self.queryset
 
 
 class BookDetailView(LoginRequiredMixin, DetailView):
@@ -41,7 +59,12 @@ class BookDetailView(LoginRequiredMixin, DetailView):
 
 class BookCreateView(LoginRequiredMixin, CreateView):
     model = Book
-    fields = "__all__"
+    form_class = BookForm
+
+
+class BookUpdateView(LoginRequiredMixin, UpdateView):
+    model = Book
+    form_class = BookForm
 
 
 def test_session_view(request: HttpRequest) -> HttpResponse:

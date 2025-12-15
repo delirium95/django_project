@@ -1,0 +1,33 @@
+# Python
+*.pyc
+__pycache__/
+*~
+*.log
+.coverage
+.tox/
+.eggs/
+*.egg-info/
+
+# Virtual Environment
+.env
+/venv/
+/env/
+/myenv/
+
+# Django-specific files
+db.sqlite3
+local_settings.py
+/static_collected/ # Directory for collected static files during deployment
+
+# IDE-specific files (optional, depends on your editor)
+.idea/             # PyCharm/IntelliJ
+.vscode/           # VS Code
+.DS_Store          # macOS files
+Thumbs.db          # Windows files
+
+# Media/Uploaded files directory (if you want to exclude user uploads from Git)
+/media/
+
+# Secret keys and sensitive info
+# Consider using environment variables or a secure configuration management system
+# instead of relying solely on local_settings.py if possible.
